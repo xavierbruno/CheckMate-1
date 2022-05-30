@@ -12,6 +12,13 @@ config = {
     'heigh': 480
 }
 
+game_states = [
+    'choosing_a_piece', # espera o jogador escolher qual peça (botao do mouse ser clicado)
+    'choosing_a_move',  # espera o jogador escolher qual movimento (botao do mouse ser solto)
+    'validating_move',  # valida 
+    'evaluating_move'
+    ]
+
 display = pygame.display.set_mode((config['width'], config['heigh']))
 pygame.display.set_caption(config['name'])
 
@@ -24,7 +31,16 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             exit()
+        if event.type == MOUSEBUTTONDOWN:
+            pawn.handleSelect(event.pos)
+        if event.type == MOUSEBUTTONUP:
+            pawn.handleDrop(event.pos)
 
-    pieces.draw(display)
+    display.fill((0, 0, 0))
     pieces.update()
-    pygame.display.flip() 
+    pieces.draw(display)
+    pygame.display.update() 
+
+
+    
+        
