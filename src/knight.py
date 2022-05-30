@@ -1,12 +1,13 @@
 from piece import Piece
 
-class Pawn(Piece): 
+class Knight(Piece): 
 
     def __init__(self, args):
         super().__init__(args)
+        print('pawn')
     
     def move():
-        pass
+        print('move')
 
     def attack():
-        pass
+        print('atk')
