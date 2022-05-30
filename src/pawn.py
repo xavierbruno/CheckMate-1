@@ -2,8 +2,8 @@ from piece import Piece
 
 class Pawn(Piece): 
 
-    def __init__(self, args):
-        super().__init__(args)
+    def __init__(self, color, startPosition):
+        super().__init__(color, startPosition)
     
     def move():
         pass

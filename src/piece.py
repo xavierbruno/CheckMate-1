@@ -6,11 +6,12 @@ class Piece(ABC, pygame.sprite.Sprite):
     states = ['free', 'selected']
     state = 'free'
     
-    def __init__(self, image_path):
+    def __init__(self, color=None, startPosition=None):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(image_path)
+        self.color = color
+        self.image = pygame.image.load(self.getImage())
         self.rect = self.image.get_rect()
-        
+        self.rect.center = startPosition
     
     @abstractmethod
     def move():
@@ -19,6 +20,10 @@ class Piece(ABC, pygame.sprite.Sprite):
     @abstractmethod
     def attack():
         pass
+
+    def getImage(self):
+        piece = self.__class__.__name__.lower()
+        return f'sprites/{piece}_{self.color}.png'
 
     def update(self):
         self.handleMove()

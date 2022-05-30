@@ -1,5 +1,5 @@
 import pygame 
-from pawn import Pawn
+from board import Board
 from pygame.locals import * 
 from sys import exit
 
@@ -17,14 +17,17 @@ game_states = [
     'choosing_a_move',  # espera o jogador escolher qual movimento (botao do mouse ser solto)
     'validating_move',  # valida 
     'evaluating_move'
-    ]
+]
 
 display = pygame.display.set_mode((config['width'], config['heigh']))
 pygame.display.set_caption(config['name'])
 
-pawn = Pawn()
-pieces = pygame.sprite.Group()
-pieces.add(pawn)
+board = Board()
+pieces = board.getAllPieces()
+blackPiecesGroup = pygame.sprite.Group()
+whitesPiecesGroup = pygame.sprite.Group()
+blackPiecesGroup.add(board.getBlackPieces())
+whitesPiecesGroup.add(board.getWhitePieces())
 
 while True: 
     for event in pygame.event.get():
@@ -32,13 +35,17 @@ while True:
             pygame.quit()
             exit()
         if event.type == MOUSEBUTTONDOWN:
-            pawn.handleSelect(event.pos)
+            for piece in pieces:
+                piece.handleSelect(event.pos)
         if event.type == MOUSEBUTTONUP:
-            pawn.handleDrop(event.pos)
+            for piece in pieces:
+                piece.handleDrop(event.pos)
 
-    display.fill((0, 0, 0))
-    pieces.update()
-    pieces.draw(display)
+    display.fill((255, 255, 0))
+    blackPiecesGroup.update()
+    blackPiecesGroup.draw(display)
+    whitesPiecesGroup.update()
+    whitesPiecesGroup.draw(display)
     pygame.display.update() 
 
 
